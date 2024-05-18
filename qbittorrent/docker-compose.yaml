@@ -28,9 +28,9 @@ services:
       - "traefik.http.routers.torrent-secure.service=torrent"
       - "traefik.http.services.torrent.loadbalancer.server.port=8080"
 
-      - "traefik.http.routers.torrent1.entrypoints=https"
-      - "traefik.http.routers.torrent1.service=torrent1"
-      - "traefik.http.services.torrent1.loadbalancer.server.port=62609"
+      - "traefik.tcp.routers.torrent.rule=HostSNI(`torrent.darvinlabs.com`)"
+      - "traefik.tcp.routers.torrent.tls=true"
+      - "traefik.tcp.services.torrent.loadbalancer.server.port=62609"
 
       - "traefik.docker.network=proxy"
 networks:
