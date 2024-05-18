@@ -73,6 +73,11 @@ http:
     default-headers:
       headers:
         frameDeny: true
+        accessControlAllowMethods:
+          - GET
+          - OPTIONS
+          - PUT
+        accessControlAllowHeaders: "*" # Allow all headers
         browserXssFilter: true
         contentTypeNosniff: true
         forceSTSHeader: true
