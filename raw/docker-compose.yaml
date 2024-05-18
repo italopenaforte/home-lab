@@ -76,3 +76,22 @@ services:
       - /mnt/storage/Download:/downloads
     ports:
       - "8989:8989"
+
+  plex:
+    image: plexinc/pms-docker:latest
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
+      - VA_DRIVER=IHD
+      - PLEX_HW_TRANS_MAX=16
+    volumes:
+      - /home/darvin/plex/config:/config
+      - /home/darvin/plex/data:/data
+      - /home/darvin/plex/transcode:/transcode
+      - /mnt/storage/Media/:/media
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/bus/usb:/dev/bus/usb
+    network_mode: host
