@@ -29,6 +29,16 @@ http:
         - https-redirectscheme
       tls: {}
       service: plex
+
+    overseerr:
+      entryPoints:
+        - "https"
+      rule: "Host(`overseerr.darvinlabs.com`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+      tls: {}
+      service: overseerr
   #endregion
 
   #region services
@@ -47,6 +57,11 @@ http:
       loadBalancer:
         servers:
           - url: "https://192.168.1.45:32400/web/index.html"
+        passHostHeader: true
+    overseerr:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.45:5055"
         passHostHeader: true
   #endregion
 
