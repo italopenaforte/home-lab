@@ -21,11 +21,17 @@ services:
       - "traefik.http.routers.torrent.rule=Host(`torrent.darvinlabs.com`)"
       - "traefik.http.middlewares.torrent-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.torrent.middlewares=torrent-https-redirect,secured@file"
-      - "traefik.http.routers.torrent-secure.entrypoints=https"
       - "traefik.http.routers.torrent-secure.rule=Host(`torrent.darvinlabs.com`)"
       - "traefik.http.routers.torrent-secure.tls=true"
+
+      - "traefik.http.routers.torrent-secure.entrypoints=https"
       - "traefik.http.routers.torrent-secure.service=torrent"
       - "traefik.http.services.torrent.loadbalancer.server.port=8080"
+
+      - "traefik.http.routers.torrent1.entrypoints=https"
+      - "traefik.http.routers.torrent1.service=torrent1"
+      - "traefik.http.services.torrent1.loadbalancer.server.port=62609"
+
       - "traefik.docker.network=proxy"
 networks:
   proxy:
