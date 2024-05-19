@@ -1,4 +1,19 @@
 services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - WEBUI_PORT=8080
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/darvin/qbittorrent/config:/config
+      - /mnt/storage/Download:/downloads
+    ports:
+      - "8080:8080"
+      - "62609:62609"
+
   jackett:
     image: ghcr.io/linuxserver/jackett:latest
     restart: unless-stopped
