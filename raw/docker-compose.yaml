@@ -87,7 +87,7 @@ services:
       - PGID=1000
     volumes:
       - /home/darvin/sonarr/appdata/config:/config
-      - /mnt/storage/Media/Movies:/tv
+      - /mnt/storage/Media/TV Show:/tv
       - /mnt/storage/Download:/downloads
     ports:
       - "8989:8989"
