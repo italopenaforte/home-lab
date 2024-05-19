@@ -34,7 +34,6 @@ services:
     networks:
       pihole_internal:
         ipv4_address: 172.70.9.3
-      proxy:
     environment:
       TZ: "America/Sao_Paulo"
       WEBPASSWORD: "password"
