@@ -23,7 +23,6 @@ services:
       - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
       - "traefik.tcp.routers.prowlarr.rule=HostSNI(`prowlarr.yourdomain.com`)"
       - "traefik.tcp.routers.prowlarr.tls=true"
-      - "traefik.tcp.services.prowlarr.loadbalancer.server.port=62609"
       - "traefik.docker.network=proxy"
 networks:
   proxy:
