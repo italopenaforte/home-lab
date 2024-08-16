@@ -1,0 +1,33 @@
+services:
+  radarr:
+      image: ghcr.io/linuxserver/radarr:latest
+      container_name: radarr
+      restart: unless-stopped
+      environment:
+        - TZ=America/Sao_Paulo
+        - PUID=1000
+        - PGID=1000
+      volumes:
+        - /home/darvin/radarr/appdata/config:/config
+        - /mnt/storage/Download:/downloads
+        - /mnt/storage/Media/Movies:/movies
+      ports:
+        - "7878:7878"
+      labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.radarr.entrypoints=http"
+          - "traefik.http.routers.radarr.rule=Host(`radarr.yourdomain.com`)"
+          - "traefik.http.middlewares.radarr-https-redirect.redirectscheme.scheme=https"
+          - "traefik.http.routers.radarr.middlewares=radarr-https-redirect,secured@file"
+          - "traefik.http.routers.radarr-secure.rule=Host(`radarr.yourdomain.com`)"
+          - "traefik.http.routers.radarr-secure.tls=true"
+          - "traefik.http.routers.radarr-secure.entrypoints=https"
+          - "traefik.http.routers.radarr-secure.service=radarr"
+          - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+          - "traefik.tcp.routers.radarr.rule=HostSNI(`radarr.yourdomain.com`)"
+          - "traefik.tcp.routers.radarr.tls=true"
+          - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
