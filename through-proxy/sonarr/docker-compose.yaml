@@ -1,0 +1,34 @@
+services:
+  sonarr:
+    container_name: sonarr
+    image: ghcr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/darvin/sonarr/appdata/config:/config
+      - /mnt/storage/Media/TV Show:/tv
+      - /mnt/storage/Download:/downloads
+    ports:
+      - "8989:8989"
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.entrypoints=http"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.yourdomain.com`)"
+      - "traefik.http.middlewares.sonarr-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr.middlewares=sonarr-https-redirect,secured@file"
+      - "traefik.http.routers.sonarr-secure.rule=Host(`sonarr.yourdomain.com`)"
+      - "traefik.http.routers.sonarr-secure.tls=true"
+      - "traefik.http.routers.sonarr-secure.entrypoints=https"
+      - "traefik.http.routers.sonarr-secure.service=sonarr"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "traefik.tcp.routers.sonarr.rule=HostSNI(`sonarr.yourdomain.com`)"
+      - "traefik.tcp.routers.sonarr.tls=true"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
