@@ -7,7 +7,7 @@ services:
       - TZ=America/Sao_Paulo
       - PORT=5055
     volumes:
-      - /home/plex/overseerr/config:/app/config
+      - /home/darvin/overseerr/config:/app/config
     ports:
       - "5055:5055"
     networks:
@@ -15,14 +15,16 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.overseerr.entrypoints=http"
-      - "traefik.http.routers.overseerr.rule=Host(`overseerr.yourdomain.com`)"
+      - "traefik.http.routers.overseerr.rule=Host(`overseerr.darvinlabs.com`)"
       - "traefik.http.middlewares.overseerr-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.overseerr.middlewares=overseerr-https-redirect"
-      - "traefik.http.routers.overseerr-secure.entrypoints=https"
-      - "traefik.http.routers.overseerr-secure.rule=Host(`overseerr.yourdomain.com`)"
+      - "traefik.http.routers.overseerr.middlewares=overseerr-https-redirect,secured@file"
+      - "traefik.http.routers.overseerr-secure.rule=Host(`overseerr.darvinlabs.com`)"
       - "traefik.http.routers.overseerr-secure.tls=true"
+      - "traefik.http.routers.overseerr-secure.entrypoints=https"
       - "traefik.http.routers.overseerr-secure.service=overseerr"
       - "traefik.http.services.overseerr.loadbalancer.server.port=5055"
+      - "traefik.tcp.routers.overseerr.rule=HostSNI(`overseerr.darvinlabs.com`)"
+      - "traefik.tcp.routers.overseerr.tls=true"
       - "traefik.docker.network=proxy"
 
 networks:
