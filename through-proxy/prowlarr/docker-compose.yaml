@@ -2,6 +2,7 @@ services:
   prowlarr:
     image: ghcr.io/hotio/prowlarr:latest
     restart: unless-stopped
+    container_name: prowlarr
     environment:
       - TZ=America/Sao_Paulo
       - PUID=1000
@@ -15,15 +16,15 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prowlarr.entrypoints=http"
-      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.yourdomain.com`)"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.darvinlabs.com`)"
       - "traefik.http.middlewares.prowlarr-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.prowlarr.middlewares=prowlarr-https-redirect,secured@file"
-      - "traefik.http.routers.prowlarr-secure.rule=Host(`prowlarr.yourdomain.com`)"
+      - "traefik.http.routers.prowlarr-secure.rule=Host(`prowlarr.darvinlabs.com`)"
       - "traefik.http.routers.prowlarr-secure.tls=true"
       - "traefik.http.routers.prowlarr-secure.entrypoints=https"
       - "traefik.http.routers.prowlarr-secure.service=prowlarr"
       - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
-      - "traefik.tcp.routers.prowlarr.rule=HostSNI(`prowlarr.yourdomain.com`)"
+      - "traefik.tcp.routers.prowlarr.rule=HostSNI(`prowlarr.darvinlabs.com`)"
       - "traefik.tcp.routers.prowlarr.tls=true"
       - "traefik.docker.network=proxy"
 networks:
