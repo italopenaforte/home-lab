@@ -10,6 +10,8 @@ services:
       - /home/darvin/prowlarr/config:/config
     ports:
       - "9696:9696"
+    networks:
+      proxy:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prowlarr.entrypoints=http"

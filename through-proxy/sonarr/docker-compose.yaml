@@ -13,7 +13,8 @@ services:
       - /mnt/storage/Download:/downloads
     ports:
       - "8989:8989"
-
+    networks:
+      proxy:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.entrypoints=http"

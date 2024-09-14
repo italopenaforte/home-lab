@@ -10,6 +10,8 @@ services:
       - /home/plex/overseerr/config:/app/config
     ports:
       - "5055:5055"
+    networks:
+      proxy:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.overseerr.entrypoints=http"

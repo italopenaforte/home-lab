@@ -46,6 +46,8 @@ services:
           - "traefik.docker.network=proxy"
         security_opt:
           - no-new-privileges:true
+        networks:
+          proxy:
 
 networks:
   proxy:

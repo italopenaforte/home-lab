@@ -11,6 +11,8 @@ services:
     volumes:
       - /home/darvin/qbittorrent/config:/config
       - /mnt/storage/Download:/downloads
+    networks:
+      proxy:
     ports:
       - "8080:8080"
       - "62609:62609"
@@ -27,7 +29,6 @@ services:
       - "traefik.http.services.torrent.loadbalancer.server.port=8080"
       - "traefik.tcp.routers.torrent.rule=HostSNI(`torrent.yourdomain.com`)"
       - "traefik.tcp.routers.torrent.tls=true"
-      - "traefik.tcp.services.torrent.loadbalancer.server.port=62609"
       - "traefik.docker.network=proxy"
 networks:
   proxy:
