@@ -1,8 +1,8 @@
 precisa da network do proxy criada antecipadamente
 
-
+```
 docker network create proxy
-
+```
 
 Organizando o Boot das VM
 
