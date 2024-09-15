@@ -1,19 +1,18 @@
-precisa da network do proxy criada antecipadamente
+Iniciando as VM/LXC após a inicialização do Proxmox
 
+crie o arquivo de script
 ```
-docker network create proxy
+nano /usr/local/bin/start_vm.sh
 ```
 
-Organizando o Boot das VM
-
+Cole esse contéudo dentro do arquivo
 ```
 #!/bin/bash
 
 # IDs das VMs
-VM_ID_1=101
-VM_ID_2=102
+VM_ID_1=100
+VM_ID_2=101
 
-# Função para verificar se a VM está rodando
 is_vm_running() {
     local VM_ID=$1
     local STATUS=$(qm status $VM_ID | grep -o 'running')
@@ -40,23 +39,17 @@ done
 
 ```
 
-crie o script
+Dê permissões para execução
 ```
-nano /usr/local/bin/start_vm_after_vm.sh
-```
-
-dê as pergmisões de execução
-```
-chmod +x /usr/local/bin/start_vm_after_vm.sh
+chmod +x /usr/local/bin/start_vm.sh
 ```
 
-
-crie um serviço no systemd
+Crie um serviço no systemd
 ```
-nano /etc/systemd/system/start_vm_after_vm.service
+nano /etc/systemd/system/start_vm.service
 ```
 
-cole o contéudo
+Adicione esse contéudo
 ```
 [Unit]
 Description=Inicia a VM 102 após a VM 101 estar rodando por 5 minutos
@@ -64,20 +57,20 @@ After=proxmox.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/start_vm_after_vm.sh
+ExecStart=/usr/local/bin/start_vm.sh
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-arquivos criados, hora de configurar a execução
+Após a criação do script e a definição do service para o systemd, agora precisa adicionar o service ao systemctl
 ```
 systemctl daemon-reload
 
-systemctl enable start_vm_after_vm.service
+systemctl enable start_vm.service
 
-systemctl start start_vm_after_vm.service
+systemctl start start_vm.service
 ```
 
-agora toda vez que o node do proxmox subir, irá subir a instancia da vm 101 após a execução da vm 100
+Agora toda vez que o node do proxmox subir, irá subir a instancia da vm 101 após a execução da vm 100.
