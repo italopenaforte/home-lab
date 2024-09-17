@@ -1,0 +1,58 @@
+{
+  "server": {
+    "debug": true,
+    "log_level": "info",
+    "http_demo": true,
+    "http_debug": false,
+    "http_login": "demo",
+    "http_password": "demo",
+    "http_port": ":8083",
+    "ice_servers": ["stun:stun.l.google.com:19302"],
+    "rtsp_port": ":5541"
+  },
+  "streams": {
+    "demo1": {
+      "name": "test video stream 1",
+      "channels": {
+        "0": {
+          "name": "ch1",
+          "url": "rtsp://admin:admin@YOU_CAMERA_IP/uri",
+          "on_demand": true,
+          "debug": false,
+          "audio": true,
+          "status": 0
+        },
+        "1": {
+          "name": "ch2",
+          "url": "rtsp://admin:admin@YOU_CAMERA_IP/uri",
+          "on_demand": true,
+          "debug": false,
+          "audio": true,
+          "status": 0
+        }
+      }
+    },
+    "demo2": {
+      "name": "test video stream 2",
+      "channels": {
+        "0": {
+          "name": "ch1",
+          "url": "rtsp://admin:admin@YOU_CAMERA_IP/uri",
+          "on_demand": true,
+          "debug": false,
+          "status": 0
+        },
+        "1": {
+          "name": "ch2",
+          "url": "rtsp://admin:admin@YOU_CAMERA_IP/uri",
+          "on_demand": true,
+          "debug": false,
+          "status": 0
+        }
+      }
+    }
+  },
+  "channel_defaults": {
+    "on_demand": true
+  }
+}

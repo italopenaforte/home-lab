@@ -19,26 +19,15 @@ http:
         - https-redirectscheme
       tls: {}
       service: truenas
-
-    plex:
+    dns:
       entryPoints:
         - "https"
-      rule: "Host(`plex.darvinlabs.com`)"
+      rule: "Host(`dns.darvinlabs.com`)"
       middlewares:
         - default-headers
         - https-redirectscheme
       tls: {}
-      service: plex
-
-    overseerr:
-      entryPoints:
-        - "https"
-      rule: "Host(`overseerr.darvinlabs.com`)"
-      middlewares:
-        - default-headers
-        - https-redirectscheme
-      tls: {}
-      service: overseerr
+      service: truenas
   #endregion
 
   #region services
@@ -46,22 +35,17 @@ http:
     proxmox:
       loadBalancer:
         servers:
-          - url: "https://192.168.1.42:8006"
+          - url: "https://192.168.1.2:8006"
         passHostHeader: true
     truenas:
       loadBalancer:
         servers:
-          - url: "https://192.168.1.43"
+          - url: "https://192.168.1.114"
         passHostHeader: true
-    plex:
+    dns:
       loadBalancer:
         servers:
-          - url: "https://192.168.1.45:32400/web/index.html"
-        passHostHeader: true
-    overseerr:
-      loadBalancer:
-        servers:
-          - url: "https://192.168.1.45:5055"
+          - url: "https://192.168.1.64:85/admin"
         passHostHeader: true
   #endregion
 
