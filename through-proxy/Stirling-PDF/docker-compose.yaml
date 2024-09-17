@@ -3,7 +3,7 @@ services:
     container_name: "stirling-pdf"
     image: frooodle/s-pdf:latest
     ports:
-      - '8080:8080'
+      - '8085:8080'
     volumes:
       - ./trainingData:/usr/share/tessdata #Required for extra OCR languages
       - ./extraConfigs:/configs
@@ -13,3 +13,8 @@ services:
       - DOCKER_ENABLE_SECURITY=false
       - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
       - LANGS=pt_BR
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 200M
