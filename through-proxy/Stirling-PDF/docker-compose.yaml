@@ -1,20 +1,41 @@
 services:
-  stirling-pdf:
-    container_name: "stirling-pdf"
+  stirling:
+    container_name: "stirling"
     image: frooodle/s-pdf:latest
-    ports:
-      - '8085:8080'
-    volumes:
-      - ./trainingData:/usr/share/tessdata #Required for extra OCR languages
-      - ./extraConfigs:/configs
-#      - ./customFiles:/customFiles/
-#      - ./logs:/logs/
+    restart: unless-stopped
     environment:
       - DOCKER_ENABLE_SECURITY=false
       - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
       - LANGS=pt_BR
+    volumes:
+      - ./trainingData:/usr/share/tessdata #Required for extra OCR languages
+      - ./extraConfigs:/configs
+    #      - ./customFiles:/customFiles/
+    #      - ./logs:/logs/
+    ports:
+      - "8085:8080"
+    networks:
+      proxy:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stirling.entrypoints=http"
+      - "traefik.http.routers.stirling.rule=Host(`stirling.darvinlabs.com`)"
+      - "traefik.http.middlewares.stirling-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.stirling.middlewares=stirling-https-redirect,secured@file"
+      - "traefik.http.routers.stirling-secure.rule=Host(`stirling.darvinlabs.com`)"
+      - "traefik.http.routers.stirling-secure.tls=true"
+      - "traefik.http.routers.stirling-secure.entrypoints=https"
+      - "traefik.http.routers.stirling-secure.service=stirling"
+      - "traefik.http.services.stirling.loadbalancer.server.port=8085"
+      - "traefik.tcp.routers.stirling.rule=HostSNI(`stirling.darvinlabs.com`)"
+      - "traefik.tcp.routers.stirling.tls=true"
+      - "traefik.docker.network=proxy"
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 200M
+          cpus: "1.5"
+          memory: 500M
+
+networks:
+  proxy:
+    external: true
