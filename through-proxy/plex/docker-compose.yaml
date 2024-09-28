@@ -48,6 +48,11 @@ services:
           - no-new-privileges:true
         networks:
           proxy:
+        deploy:
+          resources:
+            limits:
+              cpus: "4.0"
+              memory: 1024M
 
 networks:
   proxy:

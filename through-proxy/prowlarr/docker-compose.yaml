@@ -27,6 +27,12 @@ services:
       - "traefik.tcp.routers.prowlarr.rule=HostSNI(`prowlarr.darvinlabs.com`)"
       - "traefik.tcp.routers.prowlarr.tls=true"
       - "traefik.docker.network=proxy"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 200M
+
 networks:
   proxy:
     external: true

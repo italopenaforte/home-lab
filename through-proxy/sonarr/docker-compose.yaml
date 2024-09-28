@@ -29,7 +29,11 @@ services:
       - "traefik.tcp.routers.sonarr.rule=HostSNI(`sonarr.darvinlabs.com`)"
       - "traefik.tcp.routers.sonarr.tls=true"
       - "traefik.docker.network=proxy"
-
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 200M
 networks:
   proxy:
     external: true
