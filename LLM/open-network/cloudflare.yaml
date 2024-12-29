@@ -4,3 +4,7 @@ services:
     command: tunnel --no-autoupdate run --token
     networks:
       - tunnel
+
+networks:
+  tunnel:
+    external: true
