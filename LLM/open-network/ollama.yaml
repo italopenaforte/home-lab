@@ -1,0 +1,29 @@
+services:
+  ollama:
+    container_name: ollama
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    pull_policy: always
+    volumes:
+      - ollama:/root/.ollama
+    tty: true
+    ports:
+      - 11434:11434
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+    networks:
+      - tunnel
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+volumes:
+  ollama: {}
+
+networks:
+  tunnel:
+    external: true
