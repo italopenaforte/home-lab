@@ -1,0 +1,15 @@
+services:
+  countdown-timer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    container_name: countdown_timer_container
+    networks:
+      - tunnel
+
+
+networks:
+  tunnel:
+    external: true
