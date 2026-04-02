@@ -1,0 +1,19 @@
+services:
+  stirling:
+    image: frooodle/s-pdf:latest
+    container_name: stirling
+    restart: unless-stopped
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
+      - LANGS=pt_BR
+    volumes:
+      - ./trainingData:/usr/share/tessdata
+      - ./extraConfigs:/configs
+    ports:
+      - "8085:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 500M

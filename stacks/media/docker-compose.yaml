@@ -1,0 +1,142 @@
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - WEBUI_PORT=8080
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/darvin/qbittorrent/config:/config
+      - /mnt/storage/Download:/downloads
+    ports:
+      - "8080:8080"
+      - "62609:62609"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1024M
+
+  prowlarr:
+    image: ghcr.io/hotio/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/darvin/prowlarr/config:/config
+    ports:
+      - "9696:9696"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 200M
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    volumes:
+      - /home/darvin/flaresolverr/config:/config
+    ports:
+      - "8191:8191"
+
+  radarr:
+    image: ghcr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/darvin/radarr/appdata/config:/config
+      - /mnt/storage/Download:/downloads
+      - /mnt/storage/Media/Movies:/movies
+    ports:
+      - "7878:7878"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 200M
+
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/darvin/sonarr/appdata/config:/config
+      - /mnt/storage/Media/TV Show:/tv
+      - /mnt/storage/Download:/downloads
+    ports:
+      - "8989:8989"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 200M
+
+  overseerr:
+    image: sctx/overseerr
+    container_name: overseerr
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - PORT=5055
+    volumes:
+      - /home/darvin/overseerr/config:/app/config
+    ports:
+      - "5055:5055"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 500M
+
+  plex:
+    image: plexinc/pms-docker:latest
+    container_name: plex
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
+      - VA_DRIVER=IHD
+      - PLEX_HW_TRANS_MAX=16
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/bus/usb:/dev/bus/usb
+    volumes:
+      - /home/darvin/plex/config:/config
+      - /home/darvin/plex/data:/data
+      - /home/darvin/plex/transcode:/transcode
+      - /mnt/storage/Media:/media:ro
+    ports:
+      - "32400:32400/tcp"
+      - "32400:32400/udp"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 1024M

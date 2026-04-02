@@ -1,0 +1,26 @@
+---
+# https://gethomepage.dev/configs/settings/
+
+title: Darvin Labs
+favicon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homepage.png
+
+background:
+  image: https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1920
+  blur: sm
+  opacity: 30
+
+headerStyle: clean
+
+layout:
+  Infrastructure:
+    style: row
+    columns: 4
+  Media:
+    style: row
+    columns: 4
+  Tools:
+    style: row
+    columns: 4
+  Monitoring:
+    style: row
+    columns: 2
