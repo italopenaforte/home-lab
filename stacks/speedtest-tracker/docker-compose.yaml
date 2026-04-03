@@ -14,8 +14,7 @@ services:
       - PUID=1000
       - PGID=1000
       - DB_CONNECTION=sqlite
-      - SPEEDTEST_SCHEDULE=0 */6 * * * # Run every 6 hours
-      - APP_KEY=${SPEEDTEST_APP_KEY}
+      - SPEEDTEST_SCHEDULE=*/5 * * * * # Run every 5 minutes
 
 volumes:
   speedtest-data:
