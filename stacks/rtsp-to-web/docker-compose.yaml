@@ -1,8 +1,0 @@
-services:
-  rtsp-to-web:
-    image: ghcr.io/deepch/rtsptoweb:latest
-    container_name: rtsp-to-web
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - ./config.json:/config/config.json

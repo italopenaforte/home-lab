@@ -87,23 +87,6 @@ services:
           cpus: "1.5"
           memory: 200M
 
-  overseerr:
-    image: sctx/overseerr
-    container_name: overseerr
-    restart: unless-stopped
-    environment:
-      - TZ=America/Sao_Paulo
-      - PORT=5055
-    volumes:
-      - /home/darvin/overseerr/config:/app/config
-    ports:
-      - "5055:5055"
-    deploy:
-      resources:
-        limits:
-          cpus: "1.5"
-          memory: 500M
-
   plex:
     image: plexinc/pms-docker:latest
     container_name: plex

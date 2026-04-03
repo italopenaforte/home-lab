@@ -11,3 +11,5 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+      - HOMEPAGE_ALLOWED_HOSTS=*
+      - HOMEPAGE_VAR_SERVER_IP={{HOMEPAGE_VAR_SERVER_IP}} # add the ip here
