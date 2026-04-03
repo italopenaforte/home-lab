@@ -29,10 +29,7 @@
         icon: speedtest-tracker
         href: http://{{HOMEPAGE_VAR_SERVER_IP}}:8765/
         description: Network Speed Monitor
-    - Stirling PDF:
-        icon: pdf
-        href: http://{{HOMEPAGE_VAR_SERVER_IP}}:8085/
-        description: PDF Tool
+
     - Vaultwarden:
         icon: bitwarden
         href: http://{{HOMEPAGE_VAR_SERVER_IP}}:8222/

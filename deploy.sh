@@ -11,17 +11,12 @@ STACKS_DIR="$SCRIPT_DIR/stacks"
 
 # Deploy order matters — dependencies first
 STACKS=(
-  traefik
-  pihole
   portainer
   watchtower
   uptime-kuma
-  dozzle
   media
-  stirling-pdf
   vaultwarden
   speedtest-tracker
-  rtsp-to-web
   homepage          # Last — so all services are up for the dashboard
 )
 
@@ -33,7 +28,7 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 # LLM stack is on a separate GPU machine — skip by default
-SKIP_STACKS=("llm")
+SKIP_STACKS=()
 
 should_skip() {
   local stack="$1"
