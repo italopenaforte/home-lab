@@ -1,8 +1,9 @@
 name: media-server
 
+# LinuxServer images use s6-overlay and require their /init process to be PID 1.
+# Do not enable Docker's `init: true` on this shared anchor.
 x-service-defaults: &service-defaults
   restart: unless-stopped
-  init: true
   security_opt:
     - no-new-privileges:true
   logging:
