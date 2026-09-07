@@ -1,0 +1,97 @@
+name: media-server
+
+x-service-defaults: &service-defaults
+  restart: unless-stopped
+  init: true
+  security_opt:
+    - no-new-privileges:true
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+services:
+  qbittorrent:
+    <<: *service-defaults
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-America/Sao_Paulo}
+      WEBUI_PORT: 8080
+      TORRENTING_PORT: ${QBITTORRENT_TORRENT_PORT:-6881}
+    volumes:
+      - ${CONFIG_ROOT:-/srv/media/config}/qbittorrent:/config
+      - ${DATA_ROOT:-/srv/media/data}:/data
+    ports:
+      - ${QBITTORRENT_WEBUI_PORT:-8080}:8080/tcp
+      - ${QBITTORRENT_TORRENT_PORT:-6881}:${QBITTORRENT_TORRENT_PORT:-6881}/tcp
+      - ${QBITTORRENT_TORRENT_PORT:-6881}:${QBITTORRENT_TORRENT_PORT:-6881}/udp
+    mem_limit: 1g
+
+  prowlarr:
+    <<: *service-defaults
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-America/Sao_Paulo}
+    volumes:
+      - ${CONFIG_ROOT:-/srv/media/config}/prowlarr:/config
+    ports:
+      - ${PROWLARR_PORT:-9696}:9696/tcp
+    mem_limit: 512m
+
+  radarr:
+    <<: *service-defaults
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-America/Sao_Paulo}
+    volumes:
+      - ${CONFIG_ROOT:-/srv/media/config}/radarr:/config
+      - ${DATA_ROOT:-/srv/media/data}:/data
+    ports:
+      - ${RADARR_PORT:-7878}:7878/tcp
+    mem_limit: 768m
+
+  sonarr:
+    <<: *service-defaults
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-America/Sao_Paulo}
+    volumes:
+      - ${CONFIG_ROOT:-/srv/media/config}/sonarr:/config
+      - ${DATA_ROOT:-/srv/media/data}:/data
+    ports:
+      - ${SONARR_PORT:-8989}:8989/tcp
+    mem_limit: 768m
+
+  jellyfin:
+    <<: *service-defaults
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: ${PUID:-1000}:${PGID:-1000}
+    group_add:
+      - ${RENDER_GID:-109}
+      - ${VIDEO_GID:-44}
+    environment:
+      TZ: ${TZ:-America/Sao_Paulo}
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - ${CONFIG_ROOT:-/srv/media/config}/jellyfin:/config
+      - ${CONFIG_ROOT:-/srv/media/config}/jellyfin-cache:/cache
+      - ${DATA_ROOT:-/srv/media/data}/library:/media:ro
+    ports:
+      - ${JELLYFIN_PORT:-8096}:8096/tcp
+      - 7359:7359/udp
+    mem_limit: 3g
