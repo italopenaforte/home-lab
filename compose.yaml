@@ -96,3 +96,26 @@ services:
       - ${JELLYFIN_PORT:-8096}:8096/tcp
       - 7359:7359/udp
     mem_limit: 3g
+
+  homepage:
+    <<: *service-defaults
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS:-*}
+      HOMEPAGE_VAR_SERVER_HOST: ${HOMEPAGE_SERVER_HOST:-media-server.local}
+      HOMEPAGE_VAR_JELLYFIN_PORT: ${JELLYFIN_PORT:-8096}
+      HOMEPAGE_VAR_QBITTORRENT_PORT: ${QBITTORRENT_WEBUI_PORT:-8080}
+      HOMEPAGE_VAR_RADARR_PORT: ${RADARR_PORT:-7878}
+      HOMEPAGE_VAR_SONARR_PORT: ${SONARR_PORT:-8989}
+      HOMEPAGE_VAR_PROWLARR_PORT: ${PROWLARR_PORT:-9696}
+    volumes:
+      - ./config/homepage/services.yaml:/app/config/services.yaml:ro
+      - ./config/homepage/settings.yaml:/app/config/settings.yaml:ro
+      - ./config/homepage/widgets.yaml:/app/config/widgets.yaml:ro
+      - ./config/homepage/bookmarks.yaml:/app/config/bookmarks.yaml:ro
+    ports:
+      - ${HOMEPAGE_PORT:-3000}:3000/tcp
+    mem_limit: 256m

@@ -21,6 +21,7 @@ Serviços incluídos:
 | Radarr | Organização de filmes | `7878` |
 | Sonarr | Organização de séries | `8989` |
 | Jellyfin | Reprodução da biblioteca | `8096` |
+| Homepage | Atalhos para todas as interfaces | `3000` |
 
 Não há proxy reverso nem portas publicadas na internet: a stack foi projetada
 para uso na rede local.
@@ -43,6 +44,9 @@ Veja [docs/install.md](docs/install.md) para preparar o host.
 ./scripts/deploy.sh
 ./scripts/status.sh
 ```
+
+A página inicial fica em `http://HOMEPAGE_SERVER_HOST:3000`. Ajuste
+`HOMEPAGE_SERVER_HOST` no `.env` para o IP reservado ou hostname do servidor.
 
 Depois do primeiro acesso, siga [docs/media-setup.md](docs/media-setup.md) para
 ligar qBittorrent, Prowlarr, Radarr, Sonarr e Jellyfin.

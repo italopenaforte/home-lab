@@ -55,3 +55,4 @@ echo
 docker compose ps
 echo
 echo "Jellyfin: http://$(hostname -I | awk '{print $1}'):$(read_env JELLYFIN_PORT 8096)"
+echo "Homepage: http://$(hostname -I | awk '{print $1}'):$(read_env HOMEPAGE_PORT 3000)"

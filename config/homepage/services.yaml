@@ -1,0 +1,23 @@
+- Media:
+    - Jellyfin:
+        icon: jellyfin.svg
+        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_JELLYFIN_PORT}}
+        description: Assistir filmes e séries
+
+- Downloads:
+    - qBittorrent:
+        icon: qbittorrent.svg
+        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_QBITTORRENT_PORT}}
+        description: Downloads e seed
+    - Radarr:
+        icon: radarr.svg
+        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_RADARR_PORT}}
+        description: Filmes
+    - Sonarr:
+        icon: sonarr.svg
+        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_SONARR_PORT}}
+        description: Séries
+    - Prowlarr:
+        icon: prowlarr.svg
+        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_PROWLARR_PORT}}
+        description: Indexadores
