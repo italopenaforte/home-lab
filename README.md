@@ -18,13 +18,15 @@ Serviços incluídos:
 | --- | --- | ---: |
 | qBittorrent | Download e seed | `8080` |
 | Prowlarr | Gerenciamento de indexadores | `9696` |
+| FlareSolverr | Proxy anti-bot usado pelo Prowlarr | somente interna |
 | Radarr | Organização de filmes | `7878` |
 | Sonarr | Organização de séries | `8989` |
 | Jellyfin | Reprodução da biblioteca | `8096` |
 | Homepage | Atalhos para todas as interfaces | `3000` |
 
-Não há proxy reverso nem portas publicadas na internet: a stack foi projetada
-para uso na rede local.
+O FlareSolverr fica disponível apenas dentro da rede Docker, sem porta publicada
+na LAN. Não há proxy reverso nem portas publicadas na internet: a stack foi
+projetada para uso na rede local.
 
 ## Host recomendado
 
