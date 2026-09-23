@@ -3,6 +3,10 @@
         icon: jellyfin.svg
         href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_JELLYFIN_PORT}}
         description: Assistir filmes e séries
+    - Seerr:
+        icon: seerr.svg
+        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_SEERR_PORT}}
+        description: Pedir filmes e séries
 
 - Downloads:
     - qBittorrent:
@@ -21,3 +25,7 @@
         icon: prowlarr.svg
         href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_PROWLARR_PORT}}
         description: Indexadores
+    - Bazarr:
+        icon: bazarr.svg
+        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_BAZARR_PORT}}
+        description: Legendas

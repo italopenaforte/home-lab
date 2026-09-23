@@ -11,5 +11,5 @@ cd "$ROOT_DIR"
 
 docker compose config --quiet
 docker compose pull
-docker compose up -d --remove-orphans
+docker compose up -d
 docker compose ps
