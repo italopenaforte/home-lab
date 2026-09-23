@@ -46,6 +46,19 @@ services:
       - ${PROWLARR_PORT:-9696}:9696/tcp
     mem_limit: 512m
 
+  flaresolverr:
+    <<: *service-defaults
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      TZ: ${TZ:-America/Sao_Paulo}
+      LOG_LEVEL: info
+      LOG_HTML: "false"
+    expose:
+      - 8191/tcp
+    shm_size: 512m
+    mem_limit: 1g
+
   radarr:
     <<: *service-defaults
     image: lscr.io/linuxserver/radarr:latest

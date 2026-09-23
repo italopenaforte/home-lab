@@ -50,6 +50,22 @@ e adicione as aplicações:
 
 Use as API keys exibidas nas configurações de cada aplicação.
 
+### FlareSolverr
+
+Para um indexador que informe bloqueio por proteção anti-bot, abra
+`Settings → Indexers → Indexer Proxies`, adicione `FlareSolverr` e configure:
+
+```text
+Name: FlareSolverr
+Host: http://flaresolverr:8191
+Request Max Timeout: 60
+Tags: flaresolverr
+```
+
+Teste e salve. Depois edite apenas os indexadores que precisam do proxy e
+adicione a mesma tag `flaresolverr`. Não deixe o campo de tags vazio, pois isso
+aplicaria o proxy a todos os indexadores.
+
 ## 4. Jellyfin
 
 Acesse `http://IP_DO_SERVIDOR:8096`, crie o usuário administrador e adicione:
