@@ -1,15 +1,18 @@
 # Media Server
 
 Servidor de mídia doméstico enxuto para um mini PC com Ubuntu Server. A stack
-baixa torrents, organiza filmes e séries e disponibiliza a biblioteca pelo
-Jellyfin.
+recebe pedidos de filmes e séries, baixa torrents, organiza a biblioteca,
+busca legendas e disponibiliza o conteúdo pelo Jellyfin.
 
 ## Arquitetura
 
 ```text
-qBittorrent <── Radarr / Sonarr <── Prowlarr
-     │               │
-     └──── /data ────┴────────────> Jellyfin
+Seerr ──> Radarr / Sonarr <── Prowlarr
+                │
+                ├──> qBittorrent
+                └──> /data/library ──> Jellyfin
+Bazarr <── Radarr / Sonarr
+   └────> legendas em /data/library
 ```
 
 Serviços incluídos:
@@ -20,7 +23,9 @@ Serviços incluídos:
 | Prowlarr | Gerenciamento de indexadores | `9696` |
 | Radarr | Organização de filmes | `7878` |
 | Sonarr | Organização de séries | `8989` |
+| Bazarr | Busca automática de legendas | `6767` |
 | Jellyfin | Reprodução da biblioteca | `8096` |
+| Seerr | Pedidos de filmes e séries | `5055` |
 | Homepage | Atalhos para todas as interfaces | `3000` |
 
 Não há proxy reverso nem portas publicadas na internet: a stack foi projetada
@@ -49,7 +54,22 @@ A página inicial fica em `http://HOMEPAGE_SERVER_HOST:3000`. Ajuste
 `HOMEPAGE_SERVER_HOST` no `.env` para o IP reservado ou hostname do servidor.
 
 Depois do primeiro acesso, siga [docs/media-setup.md](docs/media-setup.md) para
-ligar qBittorrent, Prowlarr, Radarr, Sonarr e Jellyfin.
+ligar qBittorrent, Prowlarr, Radarr, Sonarr, Jellyfin, Seerr e Bazarr.
+
+### Adição a uma stack já em execução
+
+Se os serviços antigos já estão funcionando no servidor, execute no diretório
+deste repositório:
+
+```bash
+./scripts/deploy.sh --add-ons
+```
+
+O script cria os diretórios de configuração, sobe Bazarr e Seerr e recria
+apenas o Homepage para carregar os novos atalhos. Os outros serviços continuam
+com seus containers e imagens atuais. Antes, confira se as portas `5055` e
+`6767` estão livres. Se sua instalação usa valores diferentes no `.env`, o
+Compose respeita esses valores.
 
 ## Layout de dados
 
@@ -57,6 +77,8 @@ ligar qBittorrent, Prowlarr, Radarr, Sonarr e Jellyfin.
 /srv/media/
 ├── config/
 │   ├── jellyfin/
+│   ├── seerr/
+│   ├── bazarr/
 │   ├── prowlarr/
 │   ├── qbittorrent/
 │   ├── radarr/
@@ -71,7 +93,8 @@ ligar qBittorrent, Prowlarr, Radarr, Sonarr e Jellyfin.
 ```
 
 qBittorrent, Radarr e Sonarr recebem a mesma montagem `/data`. Assim, imports
-podem usar hardlinks e um arquivo em seed não consome o dobro do espaço.
+podem usar hardlinks e um arquivo em seed não consome o dobro do espaço. Bazarr
+acessa a biblioteca pelos mesmos caminhos `/data/library` para salvar legendas.
 
 ## Operação
 

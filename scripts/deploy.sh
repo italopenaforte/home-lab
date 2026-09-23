@@ -4,6 +4,11 @@ set -Eeuo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
+if [[ $# -gt 1 || ( $# -eq 1 && "$1" != "--add-ons" ) ]]; then
+  echo "Uso: $0 [--add-ons]" >&2
+  exit 1
+fi
+
 if ! command -v docker >/dev/null 2>&1; then
   echo "Erro: Docker não está instalado." >&2
   exit 1
@@ -40,8 +45,10 @@ mkdir -p \
   "$CONFIG_ROOT/prowlarr" \
   "$CONFIG_ROOT/radarr" \
   "$CONFIG_ROOT/sonarr" \
+  "$CONFIG_ROOT/bazarr" \
   "$CONFIG_ROOT/jellyfin" \
   "$CONFIG_ROOT/jellyfin-cache" \
+  "$CONFIG_ROOT/seerr" \
   "$DATA_ROOT/torrents/incomplete" \
   "$DATA_ROOT/torrents/movies" \
   "$DATA_ROOT/torrents/tv" \
@@ -49,7 +56,12 @@ mkdir -p \
   "$DATA_ROOT/library/tv"
 
 docker compose config --quiet
-docker compose up -d --remove-orphans
+if [[ "${1:-}" == "--add-ons" ]]; then
+  docker compose pull bazarr seerr
+  docker compose up -d --no-deps --pull never bazarr seerr homepage
+else
+  docker compose up -d
+fi
 
 echo
 docker compose ps

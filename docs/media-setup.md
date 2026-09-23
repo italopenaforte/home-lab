@@ -80,3 +80,26 @@ ls -li /srv/media/data/library/movies/PASTA/ARQUIVO
 
 Os números na primeira coluna devem ser iguais. Se forem diferentes, revise os
 caminhos antes de continuar baixando conteúdo.
+
+## 6. Seerr
+
+Acesse `http://IP_DO_SERVIDOR:5055` e conclua o assistente inicial. Conecte o
+Jellyfin em `http://jellyfin:8096` e adicione Radarr em `http://radarr:7878`
+e Sonarr em `http://sonarr:8989`, com as respectivas API keys. Selecione as
+bibliotecas e os perfis configurados anteriormente. Os pedidos feitos no Seerr
+serão enviados ao Radarr ou Sonarr.
+
+## 7. Bazarr
+
+Acesse `http://IP_DO_SERVIDOR:6767`. Em **Settings > Sonarr** e
+**Settings > Radarr**, habilite as integrações e use os hosts `sonarr` e
+`radarr`, portas `8989` e `7878`, e as respectivas API keys.
+
+Em **Settings > Languages**, crie um perfil com português brasileiro (`pt-BR`)
+e associe-o a filmes e séries. Em **Settings > Providers**, configure ao menos
+um provedor de legendas disponível para sua região. Salve e teste as conexões.
+
+O Bazarr enxerga os arquivos pelos mesmos caminhos `/data/library/movies` e
+`/data/library/tv` usados pelo Radarr e Sonarr. Não crie *path mappings* nesse
+caso. Configure as legendas externas para ficar ao lado do vídeo, onde o
+Jellyfin poderá encontrá-las.

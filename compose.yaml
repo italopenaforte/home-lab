@@ -76,6 +76,21 @@ services:
       - ${SONARR_PORT:-8989}:8989/tcp
     mem_limit: 768m
 
+  bazarr:
+    <<: *service-defaults
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-America/Sao_Paulo}
+    volumes:
+      - ${CONFIG_ROOT:-/srv/media/config}/bazarr:/config
+      - ${DATA_ROOT:-/srv/media/data}/library:/data/library
+    ports:
+      - ${BAZARR_PORT:-6767}:6767/tcp
+    mem_limit: 512m
+
   jellyfin:
     <<: *service-defaults
     image: jellyfin/jellyfin:latest
@@ -97,6 +112,20 @@ services:
       - 7359:7359/udp
     mem_limit: 3g
 
+  seerr:
+    <<: *service-defaults
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    init: true
+    user: ${PUID:-1000}:${PGID:-1000}
+    environment:
+      TZ: ${TZ:-America/Sao_Paulo}
+    volumes:
+      - ${CONFIG_ROOT:-/srv/media/config}/seerr:/app/config
+    ports:
+      - ${SEERR_PORT:-5055}:5055/tcp
+    mem_limit: 768m
+
   homepage:
     <<: *service-defaults
     image: ghcr.io/gethomepage/homepage:latest
@@ -111,6 +140,8 @@ services:
       HOMEPAGE_VAR_RADARR_PORT: ${RADARR_PORT:-7878}
       HOMEPAGE_VAR_SONARR_PORT: ${SONARR_PORT:-8989}
       HOMEPAGE_VAR_PROWLARR_PORT: ${PROWLARR_PORT:-9696}
+      HOMEPAGE_VAR_BAZARR_PORT: ${BAZARR_PORT:-6767}
+      HOMEPAGE_VAR_SEERR_PORT: ${SEERR_PORT:-5055}
     volumes:
       - ./config/homepage/services.yaml:/app/config/services.yaml:ro
       - ./config/homepage/settings.yaml:/app/config/settings.yaml:ro
