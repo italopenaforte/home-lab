@@ -1,3 +1,4 @@
 .env
 *.log
 backups/
+__pycache__/

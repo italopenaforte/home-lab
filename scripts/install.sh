@@ -31,7 +31,7 @@ fi
 echo "Preparando ${PRETTY_NAME:-Ubuntu} para o servidor de mídia..."
 sudo -v
 sudo apt-get update
-sudo apt-get install -y ca-certificates curl git vainfo intel-gpu-tools
+sudo apt-get install -y ca-certificates curl git python3 vainfo intel-gpu-tools
 
 DOCKER_WAS_INSTALLED=false
 if docker compose version >/dev/null 2>&1; then

@@ -58,10 +58,11 @@ A página inicial fica em `http://HOMEPAGE_SERVER_HOST:3000`. Ajuste
 Depois do primeiro acesso, siga [docs/media-setup.md](docs/media-setup.md) para
 ligar qBittorrent, Prowlarr, Radarr, Sonarr, Emby, Seerr e Bazarr.
 
-Para uma instalação que ainda usa Jellyfin, siga primeiro
-[docs/migrate-to-emby.md](docs/migrate-to-emby.md). O Emby usa configuração
-separada e reaproveita os arquivos da biblioteca; usuários e histórico não
-são transferidos automaticamente.
+Se a instalação ainda usa Jellyfin, `./scripts/deploy.sh` faz a troca: baixa
+o Emby, para e remove o container antigo e verifica a interface do Emby.
+Não há retorno automático ao Jellyfin. Veja [docs/migrate-to-emby.md](docs/migrate-to-emby.md).
+A biblioteca é reaproveitada; usuários, histórico e a conexão do Seerr
+precisam ser configurados separadamente.
 
 ### Adição a uma stack já em execução
 
