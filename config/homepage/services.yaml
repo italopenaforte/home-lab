@@ -1,7 +1,7 @@
 - Media:
-    - Jellyfin:
-        icon: jellyfin.svg
-        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_JELLYFIN_PORT}}
+    - Emby:
+        icon: emby.svg
+        href: http://{{HOMEPAGE_VAR_SERVER_HOST}}:{{HOMEPAGE_VAR_EMBY_PORT}}
         description: Assistir filmes e séries
     - Seerr:
         icon: seerr.svg
