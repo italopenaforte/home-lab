@@ -46,8 +46,7 @@ mkdir -p \
   "$CONFIG_ROOT/radarr" \
   "$CONFIG_ROOT/sonarr" \
   "$CONFIG_ROOT/bazarr" \
-  "$CONFIG_ROOT/jellyfin" \
-  "$CONFIG_ROOT/jellyfin-cache" \
+  "$CONFIG_ROOT/emby" \
   "$CONFIG_ROOT/seerr" \
   "$DATA_ROOT/torrents/incomplete" \
   "$DATA_ROOT/torrents/movies" \
@@ -66,5 +65,5 @@ fi
 echo
 docker compose ps
 echo
-echo "Jellyfin: http://$(hostname -I | awk '{print $1}'):$(read_env JELLYFIN_PORT 8096)"
+echo "Emby: http://$(hostname -I | awk '{print $1}'):$(read_env EMBY_PORT "$(read_env JELLYFIN_PORT 8096)")"
 echo "Homepage: http://$(hostname -I | awk '{print $1}'):$(read_env HOMEPAGE_PORT 3000)"
