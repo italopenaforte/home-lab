@@ -2,7 +2,7 @@
 
 Servidor de mídia doméstico enxuto para um mini PC com Ubuntu Server. A stack
 recebe pedidos de filmes e séries, baixa torrents, organiza a biblioteca,
-busca legendas e disponibiliza o conteúdo pelo Jellyfin.
+busca legendas e disponibiliza o conteúdo pelo Emby.
 
 ## Arquitetura
 
@@ -10,7 +10,7 @@ busca legendas e disponibiliza o conteúdo pelo Jellyfin.
 Seerr ──> Radarr / Sonarr <── Prowlarr
                 │
                 ├──> qBittorrent
-                └──> /data/library ──> Jellyfin
+                └──> /data/library ──> Emby
 Bazarr <── Radarr / Sonarr
    └────> legendas em /data/library
 ```
@@ -25,7 +25,7 @@ Serviços incluídos:
 | Radarr | Organização de filmes | `7878` |
 | Sonarr | Organização de séries | `8989` |
 | Bazarr | Busca automática de legendas | `6767` |
-| Jellyfin | Reprodução da biblioteca | `8096` |
+| Emby | Reprodução da biblioteca | `8096` |
 | Seerr | Pedidos de filmes e séries | `5055` |
 | Homepage | Atalhos para todas as interfaces | `3000` |
 
@@ -56,7 +56,12 @@ A página inicial fica em `http://HOMEPAGE_SERVER_HOST:3000`. Ajuste
 `HOMEPAGE_SERVER_HOST` no `.env` para o IP reservado ou hostname do servidor.
 
 Depois do primeiro acesso, siga [docs/media-setup.md](docs/media-setup.md) para
-ligar qBittorrent, Prowlarr, Radarr, Sonarr, Jellyfin, Seerr e Bazarr.
+ligar qBittorrent, Prowlarr, Radarr, Sonarr, Emby, Seerr e Bazarr.
+
+Para uma instalação que ainda usa Jellyfin, siga primeiro
+[docs/migrate-to-emby.md](docs/migrate-to-emby.md). O Emby usa configuração
+separada e reaproveita os arquivos da biblioteca; usuários e histórico não
+são transferidos automaticamente.
 
 ### Adição a uma stack já em execução
 
@@ -78,7 +83,7 @@ Compose respeita esses valores.
 ```text
 /srv/media/
 ├── config/
-│   ├── jellyfin/
+│   ├── emby/
 │   ├── seerr/
 │   ├── bazarr/
 │   ├── prowlarr/

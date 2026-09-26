@@ -66,20 +66,27 @@ Teste e salve. Depois edite apenas os indexadores que precisam do proxy e
 adicione a mesma tag `flaresolverr`. Não deixe o campo de tags vazio, pois isso
 aplicaria o proxy a todos os indexadores.
 
-## 4. Jellyfin
+## 4. Emby
 
 Acesse `http://IP_DO_SERVIDOR:8096`, crie o usuário administrador e adicione:
 
 - filmes: `/media/movies`;
 - séries: `/media/tv`.
 
-Em reprodução/transcoding, selecione Intel Quick Sync (QSV) e habilite apenas
+O container usa a [imagem LinuxServer](https://docs.linuxserver.io/images/docker-emby/),
+com configuração persistente em `CONFIG_ROOT/emby` e biblioteca somente leitura.
+Mantenha metadados e imagens no diretório de configuração, sem gravação ao lado
+dos vídeos.
+
+A transcodificação por GPU neste host exige
+[Emby Premiere](https://emby.media/support/articles/Premiere-Feature-Matrix.html).
+Com a licença ativa, em reprodução/transcoding, selecione Intel Quick Sync (QSV) e habilite apenas
 os codecs suportados pelo hardware. Faça um teste reproduzindo um arquivo que
 exija conversão e observe a GPU no host:
 
 ```bash
 sudo intel_gpu_top
-docker compose logs --tail=100 jellyfin
+docker compose logs --tail=100 emby
 ```
 
 Sempre prefira clientes e formatos capazes de direct play. Isso reduz consumo,
@@ -100,7 +107,7 @@ caminhos antes de continuar baixando conteúdo.
 ## 6. Seerr
 
 Acesse `http://IP_DO_SERVIDOR:5055` e conclua o assistente inicial. Conecte o
-Jellyfin em `http://jellyfin:8096` e adicione Radarr em `http://radarr:7878`
+Emby em `http://emby:8096` e adicione Radarr em `http://radarr:7878`
 e Sonarr em `http://sonarr:8989`, com as respectivas API keys. Selecione as
 bibliotecas e os perfis configurados anteriormente. Os pedidos feitos no Seerr
 serão enviados ao Radarr ou Sonarr.
@@ -118,4 +125,4 @@ um provedor de legendas disponível para sua região. Salve e teste as conexões
 O Bazarr enxerga os arquivos pelos mesmos caminhos `/data/library/movies` e
 `/data/library/tv` usados pelo Radarr e Sonarr. Não crie *path mappings* nesse
 caso. Configure as legendas externas para ficar ao lado do vídeo, onde o
-Jellyfin poderá encontrá-las.
+Emby poderá encontrá-las.
